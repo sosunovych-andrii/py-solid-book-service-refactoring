@@ -19,12 +19,26 @@ def main(book: Book, commands: list[tuple[str, str]]) -> None | str:
     }
 
     for cmd, method_type in commands:
-        if cmd == "display":
-            display_choices[method_type]()
-        elif cmd == "print":
-            print_choices[method_type]()
-        elif cmd == "serialize":
-            return serialize_choices[method_type]()
+        try:
+            if cmd == "display":
+                if method_type in display_choices:
+                    display_choices[method_type]()
+                else:
+                    print(f"Unknown display method: {method_type}")
+            elif cmd == "print":
+                if method_type in print_choices:
+                    print_choices[method_type]()
+                else:
+                    print(f"Unknown print method: {method_type}")
+            elif cmd == "serialize":
+                if method_type in serialize_choices:
+                    return serialize_choices[method_type]()
+                else:
+                    print(f"Unknown serialize method: {method_type}")
+            else:
+                print(f"Unknown command: {cmd}")
+        except Exception as e:
+            print(f"Error occurred: {e}")
 
 
 if __name__ == "__main__":
